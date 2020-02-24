@@ -7,12 +7,12 @@ import javafx.scene.shape.Circle;
 public class Flower implements GardenObject {
 	Circle circle;
 	
-	public Flower(Point2D a,Color RED,boolean b){
+	public Flower(Point2D a,Color R,boolean b,int radius){
 		circle = new Circle();
-		circle.setCenterX(250);
-		circle.setCenterY(100);
-		circle.setRadius(25);
-		circle.setFill(Color.PEACHPUFF);;
+		circle.setCenterX(a.getX());
+		circle.setCenterY(a.getY());
+		circle.setRadius(radius);
+		circle.setFill(R);;
 		circle.setStroke(Color.BLACK);
 		circle.setStrokeWidth(1);
 		

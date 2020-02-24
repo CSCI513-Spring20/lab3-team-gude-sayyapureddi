@@ -1,6 +1,4 @@
 package application;
-	
-import java.awt.Point;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -22,7 +20,7 @@ public class Garden extends Application {
 	FlowerBed FlowerBed;
 	Circle circle;
 	Rectangle rect;
-	Point lastPosition;
+	Point2D lastPosition;
 	Point2D clickpoint;
 	@Override
 	public void start(Stage primaryStage) {
@@ -32,23 +30,25 @@ public class Garden extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			rect = new Rectangle();
+			/*rect = new Rectangle();
 			rect.setHeight(200);
 			rect.setWidth(300);
 			rect.setX(0);
 			rect.setY(0);
 			rect.setStroke(Color.BLACK);
 			rect.setFill(Color.DARKGOLDENROD);
-			root.getChildren().add(rect);
+			root.getChildren().add(rect);*/
 			
-			circle = new Circle();
-			circle.setCenterX(250);
-			circle.setCenterY( 100);
-			circle.setRadius(25);
-			circle.setFill(Color.PEACHPUFF);;
-			circle.setStroke(Color.BLACK);
-			circle.setStrokeWidth(1);
-			root.getChildren().add(circle);
+			Flower =  new Flower(new Point2D (70,90),Color.RED,true,25);
+			
+			
+			FlowerBed = new FlowerBed(new Point2D(200,100),new Point2D(50,25),Color.YELLOW,true);
+			root.getChildren().add(FlowerBed.getRectangle());
+			root.getChildren().add(Flower.getCircle());
+			
+			
+			
+			//root.getChildren().add(circle);
 			scene.setOnMouseDragged(mouseHandler);
 			scene.setOnMouseReleased(mouseHandler);
 			scene.setOnMousePressed (mouseHandler);
@@ -75,7 +75,7 @@ public class Garden extends Application {
 				System.out.println("Dragging");
 				double delataX = clickpoint.getX()-lastPosition.getX();
 				double delataY = clickpoint.getY()-lastPosition.getY();
-				//flower.move(delataX,delataY);
+				Flower.move(delataX,delataY);
 				
 			}
 			
@@ -83,7 +83,7 @@ public class Garden extends Application {
 		
 		}
 			
-		//lastPosition = clickpoint;
+		lastPosition = clickpoint;
 	}
 };
 			
