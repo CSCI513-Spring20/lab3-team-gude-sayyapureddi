@@ -1,7 +1,8 @@
 package application;
 
+import javafx.geometry.Point2D;
+
 public interface GardenObject {
-public default void move(double x,double y ) {
-		
-	}
+public boolean ContainsPoint(Point2D point);
+public void move(double x,double y );
 }

@@ -29,16 +29,7 @@ public class Garden extends Application {
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
-			primaryStage.show();
-			/*rect = new Rectangle();
-			rect.setHeight(200);
-			rect.setWidth(300);
-			rect.setX(0);
-			rect.setY(0);
-			rect.setStroke(Color.BLACK);
-			rect.setFill(Color.DARKGOLDENROD);
-			root.getChildren().add(rect);*/
-			
+			primaryStage.show();			
 			Flower =  new Flower(new Point2D (70,90),Color.RED,true,25);
 			
 			
@@ -76,6 +67,7 @@ public class Garden extends Application {
 				double delataX = clickpoint.getX()-lastPosition.getX();
 				double delataY = clickpoint.getY()-lastPosition.getY();
 				Flower.move(delataX,delataY);
+				FlowerBed.move(delataX, delataY);
 				
 			}
 			

@@ -21,6 +21,10 @@ public class Flower implements GardenObject {
 		return circle;
 	}
 	@Override
+	public boolean ContainsPoint(javafx.geometry.Point2D point) {
+		return (circle.contains(point));				
+	}
+	@Override
 	public void move(double dX, double dY) {
 		circle.setCenterX(circle.getCenterX()+dX);
 		circle.setCenterY(circle.getCenterY()+dY);
