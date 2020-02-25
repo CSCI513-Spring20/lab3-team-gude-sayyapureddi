@@ -1,5 +1,8 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -18,9 +21,12 @@ public class Garden extends Application {
 	Scene scene;
 	Flower Flower;
 	FlowerBed FlowerBed;
+	List<GardenObject> flowers = new ArrayList<GardenObject>();
+	GardenObject currentShape;
 	Circle circle;
 	Rectangle rect;
-	Point2D lastPosition;
+	boolean inDragMode = false;
+	Point2D lastPosition =null;;
 	Point2D clickpoint;
 	@Override
 	public void start(Stage primaryStage) {
@@ -31,8 +37,6 @@ public class Garden extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();			
 			Flower =  new Flower(new Point2D (70,90),Color.RED,true,25);
-			
-			
 			FlowerBed = new FlowerBed(new Point2D(200,100),new Point2D(50,25),Color.YELLOW,true);
 			root.getChildren().add(FlowerBed.getRectangle());
 			root.getChildren().add(Flower.getCircle());
@@ -56,29 +60,53 @@ public class Garden extends Application {
 			clickpoint = new Point2D(mouseEvent.getX(),mouseEvent.getY());
 			System.out.println(clickpoint.getX()+""+clickpoint.getY());
 			String eventName = mouseEvent.getEventType().getName();
+			if(!inDragMode){
+        		currentShape = getCurrentShape();
+        	}
 			
 			switch(eventName) {
 			
 			case("MOUSE_DRAGGED"):
 				
-			if(lastPosition != null) {
-				
+			if(currentShape!=null && lastPosition != null) {
+				inDragMode = true;
 				System.out.println("Dragging");
 				double delataX = clickpoint.getX()-lastPosition.getX();
 				double delataY = clickpoint.getY()-lastPosition.getY();
-				Flower.move(delataX,delataY);
-				FlowerBed.move(delataX, delataY);
-				
+				currentShape.move(delataX,delataY);
 			}
 			
 		break;
+			case "MOUSE_RELEASED":
+        		
+        		// If current shape is a circle and mouse released inside rectangle
+        		if(currentShape!=null && currentShape instanceof Flower){
+        			for(GardenObject container: flowers){
+            			if (container instanceof FlowerBed && container.ContainsPoint(clickpoint)){
+            				((FlowerBed)container).addChild(currentShape);
+            				break;
+            			}
+            			
+            		} 
 		
 		}
+			
+        		inDragMode = false;
+			}	
 			
 		lastPosition = clickpoint;
 	}
 };
-			
+private GardenObject getCurrentShape(){
+	GardenObject currentShape = null;
+	for(GardenObject flower: flowers){
+		if (GardenObject.ContainsPoint(clickpoint)){
+			currentShape = flower;
+			break;
+		}
+	} 
+	return currentShape;
+}	
 			
 			
 	public static void main(String[] args) {
